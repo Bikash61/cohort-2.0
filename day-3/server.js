@@ -6,6 +6,10 @@ app.use(express.json()) // Middleware
 
 const notes = []
 
+app.post("/",(req,res)=>{
+    res.send("Hi finally my code is running in deployment")
+})
+
 app.post("/notes",(req,res)=>{
     console.log(req.body)
     notes.push(req.body)
