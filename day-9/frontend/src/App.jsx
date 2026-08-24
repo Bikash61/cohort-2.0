@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import React from 'react'
 import axios from 'axios'
 
@@ -25,10 +25,21 @@ function App(){
 
   ])
 
-  axios.get("http://localhost:3000/api/notes")
-  .then((res)=>{
-    setNotes(res.data.notes)
-  })
+  console.log("Hello INtegration")
+
+  function fetchNotes(){
+     axios.get("http://localhost:3000/api/notes")
+      .then((res)=>{
+        setNotes(res.data.notes)
+      })
+
+  }
+
+  useEffect(()=>{
+     fetchNotes(  )
+  },[])
+
+
   return (
     <>
     <div className="notes">
