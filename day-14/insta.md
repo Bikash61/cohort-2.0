@@ -5,7 +5,13 @@
 ==> OTP based verification
 
 ==> post 
-create 
+create
+{
+    caption:string
+    img_url:string
+    user: user_id
+    created_at : date and time
+} 
 can see feed 
 like posts (collection types )
 save posts 
