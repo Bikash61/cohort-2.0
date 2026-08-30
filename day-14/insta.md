@@ -24,3 +24,4 @@ user {
     followes: Array,
     profile_image : String
 }
+
