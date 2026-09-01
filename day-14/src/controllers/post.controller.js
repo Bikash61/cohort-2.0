@@ -90,7 +90,7 @@ async function getPostController(req,res){
    
 }
 
-async function getPostDetails(req,res){
+async function getPostDetailsController(req,res){
     const token = req.cookies.token
     if(!token){
         return res.status(401).json({
@@ -119,7 +119,7 @@ async function getPostDetails(req,res){
         })
     }
 
-    const isValidUser  = post.user  ===userId
+    const isValidUser  = post.user.toString()  ===userId
 
     if(!isValidUser){
         return req.status(403).json({
@@ -133,6 +133,7 @@ async function getPostDetails(req,res){
 }
 module.exports = {
     createPostController,
-    getPostController
+    getPostController,
+    getPostDetailsController,
 
 }
