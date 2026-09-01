@@ -7,6 +7,7 @@ const imagekit = new ImageKit({
     privateKey:process.env.IMAGEKIT_PRIVATE_KEY
 })
 
+
 async function createPostController(req,res){
     console.log(req.body,req.file)
 
@@ -18,12 +19,12 @@ async function createPostController(req,res){
         })
     }
 
-    let decoded
+    let decoded = null
     try{
         decoded = jwt.verify(token,process.env.JWT_SECRET)
     }catch (err){
         return res.status(401).json({
-            message:"user nz"
+            message:"user not authorized"
         })
     }
 
@@ -58,4 +59,80 @@ async function createPostController(req,res){
     }
 }
 
-module.exports = {createPostController}
+async function getPostController(req,res){
+    const token = req.cookies.token
+    if(!token){
+        return res.status(401).json({
+            message:"Unauthorized acess"
+        })
+    }
+    let decoded;
+    try{
+        decode = jwt.verify(token,process.env.JWT_SECRET)
+    }catch(err){
+        return res.status(401).json({
+            message:"Token is Invalid"
+        })
+
+    }
+
+    const userId = decoded.id
+
+    const posts = await postModel.find({
+        user: userId
+    })
+
+    res.status(200).json({
+        message:"Post Fetched Sucessfully",
+        posts
+    })
+
+   
+}
+
+async function getPostDetails(req,res){
+    const token = req.cookies.token
+    if(!token){
+        return res.status(401).json({
+            message:"Unauthorized acess"
+        })
+    }
+    
+    let decoded
+    try{
+        decoded = jwt.verify(token,process.env.JWT_SECRET)
+
+    }catch(err){
+        return res.status(401).json({
+            message:"Unauthorized Acess"
+        })
+    }
+
+    const userId = decoded.id
+    const postId = req.params.postId
+
+    const post = await postModel.findById(postId)
+
+    if(!post){
+        return req.status(404).json({
+            message:"post not found"
+        })
+    }
+
+    const isValidUser  = post.user  ===userId
+
+    if(!isValidUser){
+        return req.status(403).json({
+            message:"Forbodden Content"
+        })
+    }
+
+    return res.status(200).json({
+        message:"Post fetched sucessfully "
+    })
+}
+module.exports = {
+    createPostController,
+    getPostController
+
+}
