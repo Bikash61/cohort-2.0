@@ -3,7 +3,7 @@ const postController = require("../controllers/post.controller")
 const postRouter = express.Router()
 const multer = require("multer")
 const uplaod = multer({storage:multer.memoryStorage()})
-const { identifyUser } = require("../middleware/auth.middleware")
+const identifyUser = require("../middleware/auth.middleware")
 
 
 

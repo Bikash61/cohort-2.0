@@ -1,8 +1,8 @@
 const express = require("express");
-const userController = require("../controllers/user.controller") 
+const followUserController = require("../controllers/user.controller")
 const identifyUser = require("../middleware/auth.middleware")
 
-const userRouter = express();
+const userRouter = express.Router();
 
 /**
  * @routes Post /api/users/follow/:userid
@@ -10,8 +10,16 @@ const userRouter = express();
  * @acess Private
  */
 
-userRouter.post("/follow/:username",identifyUser,userController.followUserController)
+userRouter.post("/follow/:username",identifyUser,followUserController.followUserController)
 
+/**
+ * @routes Post /api/users/unfollow/:userid
+ * @description unfollow a user
+ * @acess Private
+ */
+
+userRouter.post("/unfollow/:username",identifyUser,followUserController.unFollowController)
 module.exports = {
     userRouter,
 };
+
