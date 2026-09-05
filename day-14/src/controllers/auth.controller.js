@@ -2,6 +2,12 @@ const userModel = require("../models/user.model");
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 
+/**
+ * POST /api/auth/register
+ * Creates a new user after checking username/email aren't taken,
+ * hashes the password with bcrypt, then signs a JWT and sends it
+ * back as an httpOnly-less "token" cookie (see auth.middleware.js).
+ */
 async function registerController (req,res){
     const{email,username,password,bio,profileImage} = req.body
 
@@ -48,6 +54,12 @@ async function registerController (req,res){
     })
 }
 
+/**
+ * POST /api/auth/login
+ * Looks up the user by username or email, verifies the password
+ * against the stored bcrypt hash, and issues a fresh JWT cookie
+ * on success.
+ */
 async function loginController(req,res){
     const {username, email, password } = req.body
 

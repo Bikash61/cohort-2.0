@@ -1,6 +1,13 @@
 const { followModel } = require("../models/follow.model")
 const userModel = require("../models/user.model")
 
+/**
+ * POST /api/users/follow/:username (auth required)
+ * Makes the authenticated user follow the user named in the URL.
+ * Rejects following a non-existent user, following yourself, and
+ * is idempotent — following an already-followed user just returns
+ * the existing follow record.
+ */
 async function followUserController(req,res){
     const followerUsername = req.user.username
     const followeeUsername = req.params.username
@@ -21,6 +28,9 @@ async function followUserController(req,res){
         })
     }
 
+    // FIXME: follower/followee are swapped here — this actually checks
+    // whether followeeUsername already follows followerUsername, not
+    // the other way around. Should be { follower: followerUsername, followee: followeeUsername }.
     const isAlreadyFollowing = await followModel.findOne({
         followee : followerUsername,
         follower : followeeUsername
@@ -45,6 +55,11 @@ async function followUserController(req,res){
 }
 
 
+/**
+ * POST /api/users/unfollow/:username (auth required)
+ * Removes the follow relationship from the authenticated user to
+ * the user named in the URL, if one exists.
+ */
 async function unFollowController(req,res){
     const followerUsername = req.user.username
     const followeeUsername = req.params.username

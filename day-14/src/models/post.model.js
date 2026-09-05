@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
 
+/**
+ * A single image post. `imgUrl` points to the ImageKit-hosted file
+ * uploaded via the create-post endpoint. `user` is the author's ObjectId.
+ */
 const postSchema = new mongoose.Schema({
     caption:{
         type:String,

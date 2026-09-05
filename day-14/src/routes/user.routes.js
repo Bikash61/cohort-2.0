@@ -5,17 +5,17 @@ const identifyUser = require("../middleware/auth.middleware")
 const userRouter = express.Router();
 
 /**
- * @routes Post /api/users/follow/:userid
+ * @route POST /api/users/follow/:username
  * @description follow a user
- * @acess Private
+ * @access Private
  */
 
 userRouter.post("/follow/:username",identifyUser,followUserController.followUserController)
 
 /**
- * @routes Post /api/users/unfollow/:userid
+ * @route POST /api/users/unfollow/:username
  * @description unfollow a user
- * @acess Private
+ * @access Private
  */
 
 userRouter.post("/unfollow/:username",identifyUser,followUserController.unFollowController)

@@ -1,5 +1,9 @@
 const mongoose = require("mongoose")
 
+/**
+ * A registered user. `password` stores a bcrypt hash, never plaintext.
+ * `profileImage` defaults to a generic avatar when none is uploaded.
+ */
 const userSchema = new mongoose.Schema({
     username : {
     type:String,
