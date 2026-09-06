@@ -6,10 +6,17 @@
 
 const express = require("express");
 const cookieParser = require("cookie-parser")
+const cors = require("cors")
 
 const app = express();
 app.use(express.json());      // parse incoming JSON request bodies
 app.use(cookieParser());      // populate req.cookies (used to read the JWT auth cookie)
+app.use(cors(
+    {
+        credentials:true,
+        origin:"http://localhost:5173"
+    }
+))
 
 // Required Routes
 const authRouter = require("./routes/auth.routes");
